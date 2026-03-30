@@ -128,7 +128,7 @@ module.exports = grammar({
                 /'[^']*'/
 	    ),
 
-        word: $ => /[a-zA-Z0-9_]+/,
+        word: $ => /[\\a-zA-Z0-9_]+/,
         _reg: $ => /%?[a-z0-9]+/,
         address: $ => /[=\$][a-zA-Z0-9_]+/, // GAS x86 address
         reg: $ => choice($._reg, $.word, $.address),
