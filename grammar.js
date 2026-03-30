@@ -26,7 +26,7 @@ module.exports = grammar({
             seq(
                 field('kind', $.meta_ident),
                 optional(choice(
-                    $.ident,
+                    seq($.ident, seq($.ident, repeat(seq(',', $.ident)))),
                     seq($.int, repeat(seq(',', $.int))),
                     seq($.float, repeat(seq(',', $.float))),
                     seq($.string, repeat(seq(',', $.string))),

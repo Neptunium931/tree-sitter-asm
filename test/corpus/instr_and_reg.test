@@ -203,3 +203,17 @@ mov rax, \parm
     (ident
       (reg
         (word)))))
+==========
+Macro -- simple macro
+==========
+.macro foo r
+mov \r, 0
+.endm
+---
+==========
+Macro -- simple macro multi args
+==========
+.macro foo r, v
+mov \r, \v
+.endm
+---
