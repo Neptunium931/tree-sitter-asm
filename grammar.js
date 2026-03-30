@@ -26,7 +26,10 @@ module.exports = grammar({
             seq(
                 field('kind', $.meta_ident),
                 optional(choice(
-                    seq($.ident, seq($.ident, repeat(seq(',', $.ident)))),
+                    seq(
+                      $.ident, // macro name
+                      optional(seq($._macro_arg, repeat(seq(',', $._macro_arg))))
+                    ),
                     seq($.int, repeat(seq(',', $.int))),
                     seq($.float, repeat(seq(',', $.float))),
                     seq($.string, repeat(seq(',', $.string))),
@@ -135,6 +138,8 @@ module.exports = grammar({
         meta_ident: $ => /\.[a-z_]+/,
         _ident: $ => /[a-zA-Z_0-9.]+/,
         ident: $ => choice($._ident, $.meta_ident, $.reg),
+        _macro_arg_value: $ => choice($.int, $.float, $.string, $.ident),
+        _macro_arg: $ => seq($.ident, optional(seq("=", $._macro_arg_value))),
 
         line_comment: $ =>
             choice(

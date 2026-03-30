@@ -210,10 +210,59 @@ Macro -- simple macro
 mov \r, 0
 .endm
 ---
+(program
+  (meta
+    (meta_ident)
+    (ident
+      (reg
+        (word)))
+    (ident
+      (reg
+        (word))))
+  (instruction
+    (word)
+    (ident
+      (reg
+        (word)))
+    (int))
+  (meta
+    (meta_ident)))
 ==========
 Macro -- simple macro multi args
 ==========
 .macro foo r, v
 mov \r, \v
+.endm
+---
+(program
+  (meta
+    (meta_ident)
+    (ident
+      (reg
+        (word)))
+    (ident
+      (reg
+        (word)))
+    (ident
+      (reg
+        (word))))
+  (instruction
+    (word)
+    (ident
+      (reg
+        (word)))
+    (ident
+      (reg
+        (word))))
+  (meta
+    (meta_ident)))
+==========
+Macro -- example macro of gas doc
+==========
+.macro  sum from=0, to=5
+.long   \from
+.if     \to-\from
+sum     "(\from+1)",\to
+.endif
 .endm
 ---
