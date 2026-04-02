@@ -30,6 +30,7 @@ module.exports = grammar({
                       $.ident, // macro name
                       optional(seq($._macro_arg, repeat(seq(',', $._macro_arg))))
                     ),
+                    $.op_expr,
                     seq($.int, repeat(seq(',', $.int))),
                     seq($.float, repeat(seq(',', $.float))),
                     seq($.string, repeat(seq(',', $.string))),
@@ -141,7 +142,12 @@ module.exports = grammar({
         _macro_arg_value: $ => choice($.int, $.float, $.string, $.ident),
         _macro_arg: $ => seq($.ident, optional(seq("=", $._macro_arg_value))),
         prefix_operator: $ => /[~-]/,
-        infix_operator: $ => /\/%*<{1,2}>{1,2}|&^!+-/,
+        infix_operator: $ => /[\/%*<>|&^!+-]|<<|>>/,
+        op_expr: $ => seq(
+          field('lhs', $._expr),
+          field('op', $.infix_operator),
+          field('rhs', $._expr),
+        ),
 
         line_comment: $ =>
             choice(

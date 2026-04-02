@@ -111,3 +111,8 @@ Label and Operator -- prefix operator tilde
     (meta_ident)
     (int
       (prefix_operator))))
+==========
+Label and Operator -- additive operator
+==========
+.quad 1+2
+---
