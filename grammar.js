@@ -140,6 +140,9 @@ module.exports = grammar({
         ident: $ => choice($._ident, $.meta_ident, $.reg),
         _macro_arg_value: $ => choice($.int, $.float, $.string, $.ident),
         _macro_arg: $ => seq($.ident, optional(seq("=", $._macro_arg_value))),
+        _prefix_operator: $ => choice('~', '-'),
+        _infix_operator: $ => choice('*', '/', '%', /<{1,2}/, />{1,2}/, '|',
+                                     '&', '^', '!', '+', '-'),
 
         line_comment: $ =>
             choice(
