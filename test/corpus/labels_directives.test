@@ -91,3 +91,23 @@ length: .word 8
           (meta_ident)
           (int))))
 
+==========
+Label and Operator -- prefix operator negative
+==========
+.quad -2
+---
+(program
+  (meta
+    (meta_ident)
+    (int
+      (prefix_operator))))
+==========
+Label and Operator -- prefix operator tilde
+==========
+.quad ~2
+---
+(program
+  (meta
+    (meta_ident)
+    (int
+      (prefix_operator))))

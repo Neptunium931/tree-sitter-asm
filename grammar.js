@@ -118,9 +118,9 @@ module.exports = grammar({
             ),
 
         int: $ => {
-            const _int = /-?([0-9][0-9_]*|(0x|\$)[0-9A-Fa-f][0-9A-Fa-f_]*|0b[01][01_]*)/
+            const _int = /([0-9][0-9_]*|(0x|\$)[0-9A-Fa-f][0-9A-Fa-f_]*|0b[01][01_]*)/
             return choice(
-                seq('#', token.immediate(_int)),
+                seq(seq(optional('#'), optional($.prefix_operator)), token.immediate(_int)),
                 _int,
             )
         },
@@ -140,9 +140,8 @@ module.exports = grammar({
         ident: $ => choice($._ident, $.meta_ident, $.reg),
         _macro_arg_value: $ => choice($.int, $.float, $.string, $.ident),
         _macro_arg: $ => seq($.ident, optional(seq("=", $._macro_arg_value))),
-        _prefix_operator: $ => choice('~', '-'),
-        _infix_operator: $ => choice('*', '/', '%', /<{1,2}/, />{1,2}/, '|',
-                                     '&', '^', '!', '+', '-'),
+        prefix_operator: $ => /[~-]/,
+        infix_operator: $ => /\/%*<{1,2}>{1,2}|&^!+-/,
 
         line_comment: $ =>
             choice(
