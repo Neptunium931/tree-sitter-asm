@@ -146,7 +146,7 @@ module.exports = grammar({
         op_expr: $ => seq(
           field('lhs', $._expr),
           field('op', $.infix_operator),
-          field('rhs', $._expr),
+          field('rhs', choice($._expr, $.op_expr)),
         ),
 
         line_comment: $ =>

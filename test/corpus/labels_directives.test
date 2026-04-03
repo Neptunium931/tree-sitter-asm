@@ -267,3 +267,60 @@ Label and Operator -- Subtraction
       (int)
       (infix_operator)
       (int))))
+==========
+Label and Operator -- Addition with negative
+==========
+.quad 1+-2
+---
+(program
+  (meta
+    (meta_ident)
+    (op_expr
+      (int)
+      (infix_operator)
+      (int
+        (prefix_operator)))))
+==========
+Label and Operator -- Addition with multiple operands
+==========
+.quad 1+1+1
+---
+(program
+  (meta
+    (meta_ident)
+    (op_expr
+      (int)
+      (infix_operator)
+      (op_expr
+        (int)
+        (infix_operator)
+        (int)))))
+==========
+Label and Operator -- Addition with multiple operands and prefix operator
+==========
+.quad 1+1+-1
+---
+(program
+  (meta
+    (meta_ident)
+    (op_expr
+      (int)
+      (infix_operator)
+      (op_expr
+        (int)
+        (infix_operator)
+        (int
+          (prefix_operator))))))
+==========
+Label and Operator -- Addition with multiple operands and prefix operator
+==========
+.quad 1--1
+---
+(program
+  (meta
+    (meta_ident)
+    (op_expr
+      (int)
+      (infix_operator)
+      (int
+        (prefix_operator)))))
