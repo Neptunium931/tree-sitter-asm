@@ -268,3 +268,43 @@ sum     "(\from+1)",\to
 .endif
 .endm
 ---
+
+(program
+  (meta
+    (meta_ident)
+    (ident
+      (reg
+        (word)))
+    (ident
+      (reg
+        (word)))
+    (int)
+    (ident
+      (reg
+        (word)))
+    (int))
+  (meta
+    (meta_ident)
+    (ident
+      (reg
+        (word))))
+  (meta
+    (meta_ident)
+    (op_expr
+      (ident
+        (reg
+          (word)))
+      (infix_operator)
+      (ident
+        (reg
+          (word)))))
+  (instruction
+    (word)
+    (string)
+    (ident
+      (reg
+        (word))))
+  (meta
+    (meta_ident))
+  (meta
+    (meta_ident)))

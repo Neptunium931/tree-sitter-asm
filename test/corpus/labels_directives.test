@@ -112,7 +112,158 @@ Label and Operator -- prefix operator tilde
     (int
       (prefix_operator))))
 ==========
-Label and Operator -- additive operator
+Label and Operator -- Multiplication
+==========
+.quad 1*2
+---
+(program
+  (meta
+    (meta_ident)
+    (op_expr
+      (int)
+      (infix_operator)
+      (int))))
+==========
+Label and Operator -- Division
+==========
+.quad 1/2
+---
+(program
+  (meta
+    (meta_ident)
+    (op_expr
+      (int)
+      (infix_operator)
+      (int))))
+==========
+Label and Operator -- Remainder
+==========
+.quad 1%2
+---
+(program
+  (meta
+    (meta_ident)
+    (op_expr
+      (int)
+      (infix_operator)
+      (int))))
+==========
+Label and Operator -- Shift Left Simple
+==========
+.quad 1<2
+---
+(program
+  (meta
+    (meta_ident)
+    (op_expr
+      (int)
+      (infix_operator)
+      (int))))
+==========
+Label and Operator -- Shift Left Double
+==========
+.quad 1<<2
+---
+(program
+  (meta
+    (meta_ident)
+    (op_expr
+      (int)
+      (infix_operator)
+      (int))))
+==========
+Label and Operator -- Shift Right Simple
+==========
+.quad 1>2
+---
+(program
+  (meta
+    (meta_ident)
+    (op_expr
+      (int)
+      (infix_operator)
+      (int))))
+==========
+Label and Operator -- Shift Right Double
+==========
+.quad 1>>2
+---
+(program
+  (meta
+    (meta_ident)
+    (op_expr
+      (int)
+      (infix_operator)
+      (int))))
+==========
+Label and Operator -- Bitwise Inclusive Or
+==========
+.quad 1|2
+---
+(program
+  (meta
+    (meta_ident)
+    (op_expr
+      (int)
+      (infix_operator)
+      (int))))
+==========
+Label and Operator -- Bitwise And
+==========
+.quad 1&2
+---
+(program
+  (meta
+    (meta_ident)
+    (op_expr
+      (int)
+      (infix_operator)
+      (int))))
+==========
+Label and Operator -- Bitwise Exclusive Or
+==========
+.quad 1^2
+---
+(program
+  (meta
+    (meta_ident)
+    (op_expr
+      (int)
+      (infix_operator)
+      (int))))
+==========
+Label and Operator -- Bitwise Or Not
+==========
+.quad 1!2
+---
+(program
+  (meta
+    (meta_ident)
+    (op_expr
+      (int)
+      (infix_operator)
+      (int))))
+==========
+Label and Operator -- Addition
 ==========
 .quad 1+2
 ---
+(program
+  (meta
+    (meta_ident)
+    (op_expr
+      (int)
+      (infix_operator)
+      (int))))
+==========
+Label and Operator -- Subtraction
+==========
+.quad 1-2
+---
+(program
+  (meta
+    (meta_ident)
+    (op_expr
+      (int)
+      (infix_operator)
+      (int))))
