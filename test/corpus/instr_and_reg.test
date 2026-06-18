@@ -191,7 +191,7 @@ LDR A1, =addr
         (address)))))
 
 ==========
-Instruction -- Negative costant arg
+Instruction -- Negative constant arg
 ==========
 movq $-1, %rax
 ---
