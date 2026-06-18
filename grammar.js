@@ -71,10 +71,13 @@ module.exports = grammar({
                 seq(
                     field('disp', optional($.int)),
                     '(',
-                    sep(',',
-                      field('base', optional($.reg)),
-                      field('index', $.reg),
-                      field('scale', optional(choice('1', '2', '4', '8'))),
+                    choice(
+                      $.reg,
+                      sep(',',
+                        field('base', optional($.reg)),
+                        field('index', $.reg),
+                        field('scale', optional(choice('1', '2', '4', '8'))),
+                      ),
                     ),
                     ')',
                 ),

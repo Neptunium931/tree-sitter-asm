@@ -36,7 +36,7 @@ movzbl	-1(%rbp), %eax
     (instruction
         kind: (word)
         (ptr
-            (int)
+            disp: (int)
             (reg))
         (ident (reg))))
 
