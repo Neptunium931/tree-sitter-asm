@@ -58,6 +58,7 @@ module.exports = grammar({
 
         ptr: $ =>
             choice(
+                // Intel
                 seq(
                     optional(seq(choice('byte', 'word', 'dword', 'qword'), 'ptr')),
                     '[',
@@ -65,10 +66,16 @@ module.exports = grammar({
                     optional(seq(choice('+', '-'), choice($.int, $.ident))),
                     ']',
                 ),
+                // AT&T
+                // DISP(BASE, INDEX, SCALE)
                 seq(
-                    optional($.int),
+                    field('disp', optional($.int)),
                     '(',
-                    $.reg,
+                    sep(',',
+                      field('base', optional($.reg)),
+                      field('index', $.reg),
+                      field('scale', optional(choice('1', '2', '4', '8'))),
+                    ),
                     ')',
                 ),
                 seq(
@@ -160,5 +167,5 @@ function sep(separator, ...rules) {
   for (let i = 1; i < rules.length; i++) {
     parts.push(separator, rules[i]);
   }
-  return optional(seq(...parts));
+  return seq(...parts);
 }
