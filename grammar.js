@@ -13,7 +13,7 @@ module.exports = grammar({
     ],
 
     rules: {
-        program: $ => sep(repeat1('\n'), $._item),
+        program: $ => repeatSep(repeat1('\n'), $._item),
         _item: $ =>
             choice(
                 $.meta,
@@ -45,7 +45,7 @@ module.exports = grammar({
                 ),
             ),
         const: $ => seq('const', field('name', $.word), field('value', $._tc_expr)),
-        instruction: $ => seq(field('kind', $.word), choice(sep(',', $._expr), repeat($._tc_expr))),
+        instruction: $ => seq(field('kind', $.word), choice(repeatSep(',', $._expr), repeat($._tc_expr))),
         _expr: $ => choice($.ptr, $.ident, $.int, $.string, $.float, $.list),
 
         // ARMv7
@@ -150,6 +150,15 @@ module.exports = grammar({
     },
 })
 
-function sep(separator, rule) {
+function repeatSep(separator, rule) {
     return optional(seq(rule, repeat(seq(separator, rule)), optional(separator)))
+}
+
+function sep(separator, ...rules) {
+  if (rules.length === 0) return optional();
+  let parts = [rules[0]];
+  for (let i = 1; i < rules.length; i++) {
+    parts.push(separator, rules[i]);
+  }
+  return optional(seq(...parts));
 }
