@@ -387,3 +387,17 @@ movq $rax, 4(, %rdi, 8)
     (ptr
       (int)
       (reg))))
+
+==========
+Instruction -- Negative constant arg
+==========
+movq $-1, %rax
+---
+
+(program
+  (instruction
+    (word)
+    (int
+      (prefix_operator))
+    (ident
+      (reg))))

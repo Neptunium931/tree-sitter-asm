@@ -131,7 +131,7 @@ module.exports = grammar({
         int: $ => {
             const _int = /([0-9][0-9_]*|(0x|\$)[0-9A-Fa-f][0-9A-Fa-f_]*|0b[01][01_]*)/
             return choice(
-                seq(seq(optional('#'), optional($.prefix_operator)), token.immediate(_int)),
+                seq(optional(choice('#', '$')), optional($.prefix_operator), token.immediate(_int)),
                 _int,
             )
         },

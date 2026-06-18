@@ -1105,7 +1105,7 @@
           "type": "SEQ",
           "members": [
             {
-              "type": "SEQ",
+              "type": "CHOICE",
               "members": [
                 {
                   "type": "CHOICE",
@@ -1115,21 +1115,25 @@
                       "value": "#"
                     },
                     {
-                      "type": "BLANK"
+                      "type": "STRING",
+                      "value": "$"
                     }
                   ]
                 },
                 {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "SYMBOL",
-                      "name": "prefix_operator"
-                    },
-                    {
-                      "type": "BLANK"
-                    }
-                  ]
+                  "type": "BLANK"
+                }
+              ]
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "prefix_operator"
+                },
+                {
+                  "type": "BLANK"
                 }
               ]
             },
