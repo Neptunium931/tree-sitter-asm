@@ -357,10 +357,63 @@
   {
     "type": "ptr",
     "named": true,
-    "fields": {},
+    "fields": {
+      "base": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "reg",
+            "named": true
+          }
+        ]
+      },
+      "disp": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "int",
+            "named": true
+          }
+        ]
+      },
+      "index": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "reg",
+            "named": true
+          }
+        ]
+      },
+      "scale": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "1",
+            "named": false
+          },
+          {
+            "type": "2",
+            "named": false
+          },
+          {
+            "type": "4",
+            "named": false
+          },
+          {
+            "type": "8",
+            "named": false
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "ident",
@@ -535,6 +588,22 @@
   },
   {
     "type": "/",
+    "named": false
+  },
+  {
+    "type": "1",
+    "named": false
+  },
+  {
+    "type": "2",
+    "named": false
+  },
+  {
+    "type": "4",
+    "named": false
+  },
+  {
+    "type": "8",
     "named": false
   },
   {

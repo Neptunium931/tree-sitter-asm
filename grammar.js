@@ -13,7 +13,7 @@ module.exports = grammar({
     ],
 
     rules: {
-        program: $ => sep(repeat1('\n'), $._item),
+        program: $ => repeatSep(repeat1('\n'), $._item),
         _item: $ =>
             choice(
                 $.meta,
@@ -49,7 +49,7 @@ module.exports = grammar({
                 ),
             ),
         const: $ => seq('const', field('name', $.word), field('value', $._tc_expr)),
-        instruction: $ => seq(field('kind', $.word), choice(sep(',', $._expr), repeat($._tc_expr))),
+        instruction: $ => seq(field('kind', $.word), choice(repeatSep(',', $._expr), repeat($._tc_expr))),
         _expr: $ => choice($.ptr, $.ident, $.int, $.string, $.float, $.list, seq(choiceBetweenCase('offset'), $.word)),
 
         // ARMv7
@@ -62,6 +62,7 @@ module.exports = grammar({
 
         ptr: $ =>
             choice(
+                // Intel
                 seq(
                     optional(seq(choice('byte', 'word', 'dword', 'qword'), 'ptr')),
                     '[',
@@ -69,10 +70,19 @@ module.exports = grammar({
                     optional(seq(choice('+', '-'), choice($.int, $.ident))),
                     ']',
                 ),
+                // AT&T
+                // DISP(BASE, INDEX, SCALE)
                 seq(
-                    optional($.int),
+                    field('disp', optional($.int)),
                     '(',
-                    $.reg,
+                    choice(
+                      $.reg,
+                      sep(',',
+                        field('base', optional($.reg)),
+                        field('index', $.reg),
+                        field('scale', optional(choice('1', '2', '4', '8'))),
+                      ),
+                    ),
                     ')',
                 ),
                 seq(
@@ -163,12 +173,20 @@ module.exports = grammar({
     },
 })
 
-function sep(separator, rule) {
+function repeatSep(separator, rule) {
     return optional(seq(rule, repeat(seq(separator, rule)), optional(separator)))
 }
-
 function choiceBetweenCase(...values) {
   return choice(
     ...values.flatMap(v => [String(v).toLowerCase(), String(v).toUpperCase()])
   );
+}
+
+function sep(separator, ...rules) {
+  if (rules.length === 0) return optional();
+  let parts = [rules[0]];
+  for (let i = 1; i < rules.length; i++) {
+    parts.push(separator, rules[i]);
+  }
+  return seq(...parts);
 }
