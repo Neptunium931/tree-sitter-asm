@@ -10,10 +10,14 @@ bindings/c/* linguist-generated
 CMakeLists.txt linguist-generated
 Makefile linguist-generated
 
-# Rust bindings
-bindings/rust/* linguist-generated
-Cargo.toml linguist-generated
-Cargo.lock linguist-generated
+# Go bindings
+bindings/go/* linguist-generated
+go.mod linguist-generated
+go.sum linguist-generated
+
+# Java bindings
+bindings/java/* linguist-generated
+pom.xml linguist-generated
 
 # Node.js bindings
 bindings/node/* linguist-generated
@@ -26,12 +30,17 @@ bindings/python/** linguist-generated
 setup.py linguist-generated
 pyproject.toml linguist-generated
 
-# Go bindings
-bindings/go/* linguist-generated
-go.mod linguist-generated
-go.sum linguist-generated
+# Rust bindings
+bindings/rust/* linguist-generated
+Cargo.toml linguist-generated
+Cargo.lock linguist-generated
 
 # Swift bindings
 bindings/swift/** linguist-generated
 Package.swift linguist-generated
 Package.resolved linguist-generated
+
+# Zig bindings
+bindings/zig/* linguist-generated
+build.zig linguist-generated
+build.zig.zon linguist-generated
