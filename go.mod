@@ -1,4 +1,4 @@
-module github.com/RubixDev/tree-sitter-asm
+module github.com/Neptunium931/tree-sitter-asm
 
 go 1.22
 

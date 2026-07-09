@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-asm",
-  "version": "0.1.0",
+  "version": "0.24.0",
   "description": "assembly grammar for tree-sitter",
   "main": "bindings/node",
   "types": "bindings/node",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/RubixDev/tree-sitter-asm"
+    "url": "https://github.com/Neptunium931/tree-sitter-asm"
   },
   "keywords": [
     "parser",
@@ -28,6 +28,12 @@
   ],
   "author": "RubixDev",
   "license": "MIT",
+  "maintainers": [
+    {
+      "name": "Tymothé BILLEREY",
+      "email": "tymothe_billerey@fastmail.fr"
+    }
+  ],
   "dependencies": {
     "node-addon-api": "^7.1.0",
     "node-gyp-build": "^4.8.0"

@@ -15,7 +15,7 @@
     }
   ],
   "metadata": {
-    "version": "0.1.0",
+    "version": "0.24.0",
     "license": "MIT",
     "description": "assembly grammar for tree-sitter",
     "authors": [
@@ -24,7 +24,7 @@
       }
     ],
     "links": {
-      "repository": "https://github.com/RubixDev/tree-sitter-asm"
+      "repository": "https://github.com/Neptunium931/tree-sitter-asm"
     }
   },
   "bindings": {
