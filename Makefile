@@ -3,8 +3,8 @@ $(error Windows is not supported)
 endif
 
 LANGUAGE_NAME := tree-sitter-asm
-HOMEPAGE_URL := https://github.com/RubixDev/tree-sitter-asm
-VERSION := 0.1.0
+HOMEPAGE_URL := https://github.com/Neptunium931/tree-sitter-asm
+VERSION := 0.24.0
 
 # repository
 SRC_DIR := src
