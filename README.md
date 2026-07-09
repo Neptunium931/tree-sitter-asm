@@ -3,6 +3,11 @@
 Generic assembly grammar for
 [tree-sitter](https://github.com/tree-sitter/tree-sitter)
 
+# Fork
+
+This fork is a fork of the original [tree-sitter-asm](https://github.com/RubixDev/tree-sitter-asm)
+grammar originally developed by [RubixDev](https://github.com/RubixDev).
+
 ## Usage in Neovim
 
 ### Parser Installation
