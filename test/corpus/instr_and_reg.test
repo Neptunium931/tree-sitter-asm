@@ -401,3 +401,21 @@ movq $-1, %rax
       (prefix_operator))
     (ident
       (reg))))
+==========
+Instruction -- Memory addressing source with base, index and scale (x86 intel)
+==========
+mov rax, [rsp+rax*8]
+---
+
+(program
+  (instruction
+    (word)
+    (ident
+      (reg
+        (word)))
+    (ptr
+      (reg
+        (word))
+      (reg
+        (word))
+      (int))))

@@ -10,6 +10,10 @@ module.exports = grammar({
             $._expr,
             $._tc_expr,
         ],
+        [
+            $._ptr_expr,
+            $.ptr
+        ]
     ],
 
     rules: {
@@ -60,14 +64,21 @@ module.exports = grammar({
                 '}'
             ),
 
+        _ptr_expr: $ =>
+            seq(
+                field('base', $.reg),
+                optional(field('signe',choice('+', '-'))),
+                optional(field('index', $.reg)),
+                optional(field('multiplication','*')),
+                optional(field('scale', $.int))
+            ),
         ptr: $ =>
             choice(
                 // Intel
                 seq(
                     optional(seq(choice('byte', 'word', 'dword', 'qword'), 'ptr')),
                     '[',
-                    $.reg,
-                    optional(seq(choice('+', '-'), choice($.int, $.ident))),
+                    $._ptr_expr,
                     ']',
                 ),
                 // AT&T
