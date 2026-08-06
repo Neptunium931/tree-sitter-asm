@@ -12,7 +12,12 @@ module.exports = grammar({
         ],
         [
             $._ptr_expr,
-            $.ptr
+            $.ptr,
+            $._ptr_index_scale,
+        ],
+        [
+            $._ptr_expr,
+            $._ptr_index_scale
         ]
     ],
 
@@ -64,13 +69,26 @@ module.exports = grammar({
                 '}'
             ),
 
-        _ptr_expr: $ =>
+        _ptr_index_scale: $ =>
             seq(
-                field('base', $.reg),
-                optional(field('signe',choice('+', '-'))),
-                optional(field('index', $.reg)),
-                optional(field('multiplication','*')),
-                optional(field('scale', $.int))
+                field('index', $.reg),
+                optional(seq(
+                  field('multiplication', '*'),
+                  field('scale', choice($.int, $.word))
+                ))
+            ),
+        _ptr_expr: $ =>
+            choice(
+                seq(
+                    field('base', $.reg),
+                    optional(field('signe', choice('+', '-'))),
+                    optional($._ptr_index_scale),
+                ),
+                seq(
+                    $._ptr_index_scale,
+                    optional(field('signe', choice('+', '-'))),
+                    optional(field('base', $.reg)),
+                ),
             ),
         ptr: $ =>
             choice(
@@ -151,7 +169,7 @@ module.exports = grammar({
             choice(
                 /"[^"]*"/,
                 /'[^']*'/
-	    ),
+            ),
 
         word: $ => /[\\a-zA-Z0-9_]+/,
         _reg: $ => /%?[a-z0-9]+/,

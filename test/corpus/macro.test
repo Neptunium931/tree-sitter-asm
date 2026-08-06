@@ -114,3 +114,31 @@ sum     "(\from+1)",\to
     (meta_ident))
   (meta
     (meta_ident)))
+
+==========
+Macro -- use offset as macro_arg
+==========
+.macro useOffset offset
+mov    rdi, [r11*\offset]
+.endm
+---
+(program
+  (meta
+    (meta_ident)
+    (ident
+      (reg
+        (word)))
+    (ident
+      (reg
+        (word))))
+  (instruction
+    (word)
+    (ident
+      (reg
+        (word)))
+    (ptr
+      (reg
+        (word))
+      (word)))
+  (meta
+    (meta_ident)))
