@@ -3,6 +3,7 @@ Macro -- use macro Parameters
 ==========
 mov rax, \parm
 ---
+
 (program
   (instruction
     (word)
@@ -11,7 +12,8 @@ mov rax, \parm
         (word)))
     (ident
       (reg
-        (word)))))
+        (macro_arg)))))
+
 ==========
 Macro -- simple macro
 ==========
@@ -19,23 +21,26 @@ Macro -- simple macro
 mov \r, 0
 .endm
 ---
+
 (program
   (meta
     (meta_ident)
     (ident
       (reg
         (word)))
-    (ident
-      (reg
-        (word))))
+    (macro_arg_def
+      (ident
+        (reg
+          (word)))))
   (instruction
     (word)
     (ident
       (reg
-        (word)))
+        (macro_arg)))
     (int))
   (meta
     (meta_ident)))
+
 ==========
 Macro -- simple macro multi args
 ==========
@@ -43,28 +48,32 @@ Macro -- simple macro multi args
 mov \r, \v
 .endm
 ---
+
 (program
   (meta
     (meta_ident)
     (ident
       (reg
         (word)))
-    (ident
-      (reg
-        (word)))
-    (ident
-      (reg
-        (word))))
+    (macro_arg_def
+      (ident
+        (reg
+          (word))))
+    (macro_arg_def
+      (ident
+        (reg
+          (word)))))
   (instruction
     (word)
     (ident
       (reg
-        (word)))
+        (macro_arg)))
     (ident
       (reg
-        (word))))
+        (macro_arg))))
   (meta
     (meta_ident)))
+
 ==========
 Macro -- example macro of gas doc
 ==========
@@ -75,41 +84,46 @@ sum     "(\from+1)",\to
 .endif
 .endm
 ---
+
 (program
   (meta
     (meta_ident)
     (ident
       (reg
         (word)))
-    (ident
-      (reg
-        (word)))
-    (int)
-    (ident
-      (reg
-        (word)))
-    (int))
+    (macro_arg_def
+      (ident
+        (reg
+          (word)))
+      (macro_arg_value
+        (int)))
+    (macro_arg_def
+      (ident
+        (reg
+          (word)))
+      (macro_arg_value
+        (int))))
   (meta
     (meta_ident)
     (ident
       (reg
-        (word))))
+        (macro_arg))))
   (meta
     (meta_ident)
     (op_expr
       (ident
         (reg
-          (word)))
+          (macro_arg)))
       (infix_operator)
       (ident
         (reg
-          (word)))))
+          (macro_arg)))))
   (instruction
     (word)
     (string)
     (ident
       (reg
-        (word))))
+        (macro_arg))))
   (meta
     (meta_ident))
   (meta
@@ -122,15 +136,17 @@ Macro -- use offset as macro_arg
 mov    rdi, [r11*\offset]
 .endm
 ---
+
 (program
   (meta
     (meta_ident)
     (ident
       (reg
         (word)))
-    (ident
-      (reg
-        (word))))
+    (macro_arg_def
+      (ident
+        (reg
+          (word)))))
   (instruction
     (word)
     (ident
@@ -139,6 +155,7 @@ mov    rdi, [r11*\offset]
     (ptr
       (reg
         (word))
-      (word)))
+      (scale
+        (macro_arg))))
   (meta
     (meta_ident)))
