@@ -10,15 +10,6 @@ module.exports = grammar({
             $._expr,
             $._tc_expr,
         ],
-        [
-            $._ptr_expr,
-            $.ptr,
-            $._ptr_index_scale,
-        ],
-        [
-            $._ptr_expr,
-            $._ptr_index_scale
-        ]
     ],
 
     rules: {
@@ -37,7 +28,7 @@ module.exports = grammar({
                 optional(choice(
                     seq(
                       $.ident, // macro name
-                      optional(seq($._macro_arg, repeat(seq(',', $._macro_arg))))
+                      optional(seq($.macro_arg_def, repeat(seq(',', $.macro_arg_def))))
                     ),
                     $.op_expr,
                     seq($.int, repeat(seq(',', $.int))),
@@ -70,20 +61,29 @@ module.exports = grammar({
             ),
 
         _ptr_index_scale: $ =>
-            seq(
-                field('index', $.reg),
-                optional(seq(
-                  field('multiplication', '*'),
-                  field('scale', choice($.int, $.word))
-                ))
-            ),
+             prec.left(choice(
+                seq(
+                    field('index', $.reg),
+                    field('multiplication', '*'),
+                    field('scale', $.scale),
+                ),
+                seq(
+                    field('index', $.reg),
+                ),
+                seq(
+                    field('scale', $.scale),
+                    field('multiplication', '*'),
+                    field('index', $.reg),
+                ),
+            )),
         _ptr_expr: $ =>
             choice(
+                prec(1,
                 seq(
                     field('base', $.reg),
                     optional(field('signe', choice('+', '-'))),
                     optional($._ptr_index_scale),
-                ),
+                )),
                 seq(
                     $._ptr_index_scale,
                     optional(field('signe', choice('+', '-'))),
@@ -94,7 +94,7 @@ module.exports = grammar({
             choice(
                 // Intel
                 seq(
-                    optional(seq(choice('byte', 'word', 'dword', 'qword'), 'ptr')),
+                    optional($.size),
                     '[',
                     $._ptr_expr,
                     ']',
@@ -109,7 +109,7 @@ module.exports = grammar({
                       sep(',',
                         field('base', optional($.reg)),
                         field('index', $.reg),
-                        field('scale', optional(choice('1', '2', '4', '8'))),
+                        field('scale', optional($.scale)),
                       ),
                     ),
                     ')',
@@ -171,15 +171,16 @@ module.exports = grammar({
                 /'[^']*'/
             ),
 
-        word: $ => /[\\a-zA-Z0-9_]+/,
+        word: $ => /[a-zA-Z0-9_]+/,
         _reg: $ => /%?[a-z0-9]+/,
         address: $ => /[=\$][a-zA-Z0-9_]+/, // GAS x86 address
-        reg: $ => choice($._reg, $.word, $.address),
+        reg: $ => choice($._reg, $.word, $.address, $.macro_arg),
         meta_ident: $ => /\.[a-z_]+/,
         _ident: $ => /[a-zA-Z_0-9.]+/,
         ident: $ => choice($._ident, $.meta_ident, $.reg),
-        _macro_arg_value: $ => choice($.int, $.float, $.string, $.ident),
-        _macro_arg: $ => seq($.ident, optional(seq("=", $._macro_arg_value))),
+        macro_arg_value: $ => choice($.int, $.float, $.string, $.ident),
+        macro_arg_def: $ => seq($.ident, optional(seq("=", $.macro_arg_value))),
+        macro_arg: $ => /\\[a-zA-Z0-9_]+/,
         prefix_operator: $ => /[~-]/,
         infix_operator: $ => /[\/%*<>|&^!+-]|<<|>>/,
         op_expr: $ => seq(
@@ -187,6 +188,8 @@ module.exports = grammar({
           field('op', $.infix_operator),
           field('rhs', choice($._expr, $.op_expr)),
         ),
+        scale: $ => prec(1, choice('1', '2', '4', '8', $.macro_arg)),
+        size: $ => seq(choice('byte', 'word', 'dword', 'qword'), 'ptr'),
 
         line_comment: $ =>
             choice(
