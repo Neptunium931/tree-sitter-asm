@@ -460,3 +460,37 @@ mov rax, [rax*8+rsp]
       (scale)
       (reg
         (word)))))
+
+==========
+Instruction -- Memory addressing source with index and scale (x86 intel)
+==========
+mov rax, [rax*8]
+---
+
+(program
+  (instruction
+    (word)
+    (ident
+      (reg
+        (word)))
+    (ptr
+      (reg
+        (word))
+      (scale))))
+
+==========
+Instruction -- Memory addressing source with index and scale different order (x86 intel)
+==========
+mov rax, [8*rax]
+---
+
+(program
+  (instruction
+    (word)
+    (ident
+      (reg
+        (word)))
+    (ptr
+      (scale)
+      (reg
+        (word)))))
