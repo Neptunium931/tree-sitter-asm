@@ -5,10 +5,17 @@ module.exports = grammar({
         $.line_comment,
         $.block_comment,
     ],
-    conflicts: $ => [
+conflicts: $ => [
         [
             $._expr,
             $._tc_expr,
+        ],
+        [
+            $._ptr_expr,
+            $.ptr,
+        ],
+        [
+            $._ptr_expr,
         ],
     ],
 
@@ -27,8 +34,8 @@ module.exports = grammar({
                 field('kind', $.meta_ident),
                 optional(choice(
                     seq(
-                      $.ident, // macro name
-                      optional(seq($.macro_arg_def, repeat(seq(',', $.macro_arg_def))))
+                        $.ident, // macro name
+                        optional(seq($.macro_arg_def, repeat(seq(',', $.macro_arg_def))))
                     ),
                     $.op_expr,
                     seq($.int, repeat(seq(',', $.int))),
@@ -61,7 +68,7 @@ module.exports = grammar({
             ),
 
         _ptr_index_scale: $ =>
-             prec.left(choice(
+            choice(
                 seq(
                     field('index', $.reg),
                     field('multiplication', '*'),
@@ -70,24 +77,52 @@ module.exports = grammar({
                 seq(
                     field('index', $.reg),
                 ),
-                seq(
-                    field('scale', $.scale),
-                    field('multiplication', '*'),
-                    field('index', $.reg),
-                ),
-            )),
+            ),
         _ptr_expr: $ =>
             choice(
-                prec(1,
+                seq(
+                    field('displacement', $.int),
+                    choice('+', '-'),
+                    field('base', $.reg),
+                ),
                 seq(
                     field('base', $.reg),
-                    optional(field('signe', choice('+', '-'))),
-                    optional($._ptr_index_scale),
-                )),
+                    optional(field('displacement', $.int)),
+                ),
                 seq(
-                    $._ptr_index_scale,
-                    optional(field('signe', choice('+', '-'))),
-                    optional(field('base', $.reg)),
+                    field('base', $.reg),
+                    choice(
+                        seq(
+                            choice('+', '-'),
+                            field('index', $.reg),
+                            optional(seq('*', field('scale', $.scale))),
+                        ),
+                        seq(
+                            choice('+', '-'),
+                            field('displacement', $.int),
+                        ),
+                    ),
+                ),
+                seq(
+                    field('index', $.reg),
+                    optional(seq('*', field('scale', $.scale))),
+                    choice('+', '-'),
+                    field('base', $.reg),
+                ),
+                seq(
+                    seq(field('index', $.reg), optional(seq('*', field('scale', $.scale)))),
+                ),
+                seq(
+                    field('scale', $.scale),
+                    '*',
+                    field('index', $.reg),
+                ),
+                seq(
+                    field('scale', $.scale),
+                    '*',
+                    field('index', $.reg),
+                    choice('+', '-'),
+                    field('base', $.reg),
                 ),
             ),
         ptr: $ =>

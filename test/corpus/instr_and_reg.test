@@ -494,3 +494,35 @@ mov rax, [8*rax]
       (scale)
       (reg
         (word)))))
+
+==========
+Instruction -- Memory addressing source with base and displacement (x86 intel)
+==========
+mov qword ptr [rbx+8], 0
+---
+
+(program
+  (instruction
+    kind: (word)
+    (ptr
+      (size)
+      base: (reg
+        (word))
+      displacement: (int))
+    (int)))
+
+==========
+Instruction -- Memory addressing source with base and displacement different order (x86 intel)
+==========
+mov qword ptr [3+rbx], 0
+---
+
+(program
+  (instruction
+    kind: (word)
+    (ptr
+      (size)
+      displacement: (int)
+      base: (reg
+        (word)))
+    (int)))
