@@ -67,64 +67,16 @@ conflicts: $ => [
                 '}'
             ),
 
-        _ptr_index_scale: $ =>
-            choice(
-                seq(
-                    field('index', $.reg),
-                    field('multiplication', '*'),
-                    field('scale', $.scale),
-                ),
-                seq(
-                    field('index', $.reg),
-                ),
-            ),
         _ptr_expr: $ =>
-            choice(
-                seq(
-                    field('displacement', $.int),
-                    choice('+', '-'),
-                    field('base', $.reg),
-                ),
-                seq(
-                    field('base', $.reg),
-                    optional(field('displacement', $.int)),
-                ),
-                seq(
-                    field('base', $.reg),
-                    choice(
-                        seq(
-                            choice('+', '-'),
-                            field('index', $.reg),
-                            optional(seq('*', field('scale', $.scale))),
-                        ),
-                        seq(
-                            choice('+', '-'),
-                            field('displacement', $.int),
-                        ),
-                    ),
-                ),
-                seq(
-                    field('index', $.reg),
-                    optional(seq('*', field('scale', $.scale))),
-                    choice('+', '-'),
-                    field('base', $.reg),
-                ),
-                seq(
-                    seq(field('index', $.reg), optional(seq('*', field('scale', $.scale)))),
-                ),
-                seq(
-                    field('scale', $.scale),
-                    '*',
-                    field('index', $.reg),
-                ),
-                seq(
-                    field('scale', $.scale),
-                    '*',
-                    field('index', $.reg),
-                    choice('+', '-'),
-                    field('base', $.reg),
-                ),
-            ),
+        {
+            //  base register + index register x scale + displacement
+            const base         = field('base', $.reg)
+            const index        = { field: field('index', $.reg),        operator: choice('+', '-') }
+            const scale        = { field: field('scale', $.scale),      operator: '*' }
+            const displacement = { field: field('displacement', $.int), operator: choice('+', '-') }
+            return
+        },
+
         ptr: $ =>
             choice(
                 // Intel
